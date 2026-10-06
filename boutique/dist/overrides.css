@@ -16,3 +16,4 @@
 @media(max-width:800px){.brand-logo{width:150px}.footer-logo{width:180px}}
 .form-honey{display:none!important}
 #appointment-form button:disabled{cursor:wait;opacity:.72}
+.optional{color:var(--muted);font-size:.78rem;font-weight:400}
