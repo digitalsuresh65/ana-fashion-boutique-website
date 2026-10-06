@@ -17,3 +17,51 @@
 .form-honey{display:none!important}
 #appointment-form button:disabled{cursor:wait;opacity:.72}
 .optional{color:var(--muted);font-size:.78rem;font-weight:400}
+
+/* Lightweight motion and playful scroll details */
+.scroll-progress{background:rgba(182,255,0,.14);height:3px;inset:0 0 auto;pointer-events:none;position:fixed;z-index:50}
+.scroll-progress span{background:linear-gradient(90deg,#b6ff00,#d7bb96,#8b2342);display:block;height:100%;transform:scaleX(0);transform-origin:left center;will-change:transform}
+
+.motion-ready .reveal{opacity:0;transform:translate3d(0,28px,0) scale(.985);transition:opacity .72s cubic-bezier(.22,1,.36,1),transform .72s cubic-bezier(.22,1,.36,1);transition-delay:var(--reveal-delay,0ms)}
+.motion-ready .reveal.is-visible{opacity:1;transform:translate3d(0,0,0) scale(1)}
+
+.hero-image>img{transform:scale(1.035) translate3d(0,var(--hero-shift,0),0);will-change:transform}
+.button,.filter,.text-link,.service-card,.gallery-card,.process-step,.about-mark{transition:transform .28s ease,box-shadow .28s ease,background-color .28s ease,border-color .28s ease}
+.button:hover{box-shadow:0 12px 26px rgba(100,29,50,.2);transform:translateY(-3px)}
+.button:active,.filter:active{transform:translateY(0) scale(.98)}
+.filter:hover{border-color:var(--gold);transform:translateY(-2px)}
+
+.service-card{overflow:hidden;position:relative}
+.service-card:before{background:linear-gradient(90deg,var(--maroon),#b6ff00);content:"";height:3px;inset:0 100% auto 0;position:absolute;transition:inset .35s ease}
+.service-card:hover{background:#fffaf5;box-shadow:0 18px 36px rgba(52,37,42,.09);transform:translateY(-6px);z-index:1}
+.service-card:hover:before{right:0}
+.gallery-card:hover{transform:translateY(-6px)}
+.gallery-card:hover .gallery-photo{box-shadow:0 18px 38px rgba(52,37,42,.16)}
+.gallery-photo{transition:box-shadow .35s ease}
+.process-step b{display:inline-block;transition:color .25s ease,transform .25s ease}
+.process-step:hover{transform:translateY(-4px)}
+.process-step:hover b{color:var(--maroon);transform:rotate(-5deg) scale(1.12)}
+.about-mark:hover{box-shadow:0 20px 42px rgba(100,29,50,.1);transform:rotate(-1deg) translateY(-4px)}
+
+.motion-ready .service-card.reveal.is-visible:hover,.motion-ready .gallery-card.reveal.is-visible:hover{transform:translateY(-6px)}
+.motion-ready .process-step.reveal.is-visible:hover{transform:translateY(-4px)}
+
+.ribbon i{animation:ribbon-sparkle 2.8s ease-in-out infinite;display:inline-block}
+.floating-wa{transition:transform .25s ease,box-shadow .25s ease}
+.floating-wa:hover{box-shadow:0 10px 34px rgba(50,19,34,.28);transform:translateY(-4px)}
+.floating-wa:before{animation:wa-pulse 3.2s ease-out infinite;border:1px solid rgba(182,255,0,.55);border-radius:inherit;content:"";inset:-1px;pointer-events:none;position:absolute}
+
+@keyframes ribbon-sparkle{0%,100%{opacity:.55;transform:rotate(0) scale(.8)}50%{opacity:1;transform:rotate(180deg) scale(1.18)}}
+@keyframes wa-pulse{0%,58%{opacity:0;transform:scale(1)}70%{opacity:.8}100%{opacity:0;transform:scale(1.18)}}
+
+@media(max-width:760px){
+  .motion-ready .reveal{transform:translate3d(0,20px,0) scale(.99)}
+  .motion-ready .reveal.is-visible{transform:translate3d(0,0,0) scale(1)}
+  .service-card:hover,.gallery-card:hover,.process-step:hover,.about-mark:hover{transform:none}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .motion-ready .reveal{opacity:1!important;transform:none!important}
+  .hero-image>img{transform:none!important}
+  .scroll-progress span{transition:none!important}
+}

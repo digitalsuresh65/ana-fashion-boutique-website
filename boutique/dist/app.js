@@ -124,6 +124,58 @@ cards.forEach(card => card.addEventListener('click', () => {
 lightbox.querySelector('.close').addEventListener('click', () => lightbox.close());
 lightbox.addEventListener('click', event => { if (event.target === lightbox) lightbox.close(); });
 
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const progressBar = document.createElement('div');
+progressBar.className = 'scroll-progress';
+progressBar.setAttribute('aria-hidden', 'true');
+progressBar.innerHTML = '<span></span>';
+document.body.prepend(progressBar);
+
+const progressFill = progressBar.querySelector('span');
+const heroPhoto = document.querySelector('.hero-image > img');
+let scrollTicking = false;
+const updateScrollEffects = () => {
+  const scrollRange = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollRange > 0 ? Math.min(1, window.scrollY / scrollRange) : 0;
+  progressFill.style.transform = `scaleX(${progress})`;
+  if (heroPhoto && !reducedMotion) {
+    heroPhoto.style.setProperty('--hero-shift', `${-Math.min(18, window.scrollY * 0.025)}px`);
+  }
+  scrollTicking = false;
+};
+window.addEventListener('scroll', () => {
+  if (!scrollTicking) {
+    window.requestAnimationFrame(updateScrollEffects);
+    scrollTicking = true;
+  }
+}, { passive: true });
+updateScrollEffects();
+
+if (!reducedMotion && 'IntersectionObserver' in window) {
+  const revealTargets = [...document.querySelectorAll([
+    '.hero-copy > *', '.hero-image', '.page-hero > *', '.section-head > *',
+    '.split > *', '.service-card', '.gallery-card', '.process-step',
+    '.bridal-points article', '.process-note', '.contact-layout > *',
+    '.faq-wrap > *', '.page-cta > div', 'footer > *'
+  ].join(','))];
+
+  document.querySelectorAll('.hero-copy, .page-hero, .service-grid, .gallery-grid, .process-grid, .bridal-points').forEach(group => {
+    [...group.children].forEach((item, index) => item.style.setProperty('--reveal-delay', `${Math.min(index, 5) * 70}ms`));
+  });
+  revealTargets.forEach(target => target.classList.add('reveal'));
+  document.documentElement.classList.add('motion-ready');
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+  revealTargets.forEach(target => revealObserver.observe(target));
+}
+
 const form = document.querySelector('#appointment-form');
 if (form) {
   const dateInput = form.querySelector('input[type="date"]');
