@@ -180,11 +180,50 @@ const form = document.querySelector('#appointment-form');
 if (form) {
   const dateInput = form.querySelector('input[type="date"]');
   dateInput.min = new Date().toLocaleDateString('en-CA');
-  form.addEventListener('submit', () => {
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+
     const status = form.querySelector('.form-status');
     const submitButton = form.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
+    const formData = new FormData(form);
+    const customerName = String(formData.get('Name') || '').trim();
     status.textContent = 'Sending your enquiry securely…';
+    status.classList.remove('is-error');
     submitButton.disabled = true;
     submitButton.textContent = 'Sending…';
+
+    try {
+      const response = await fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(Object.fromEntries(formData.entries()))
+      });
+      const result = await response.json();
+      const accepted = response.ok && (result.success === true || result.success === 'true');
+      const activationPending = /activat/i.test(String(result.message || ''));
+      if (!accepted || activationPending) throw new Error(activationPending ? 'activation' : 'submission');
+
+      const thankYou = document.createElement('div');
+      thankYou.className = 'form-thanks';
+      thankYou.setAttribute('role', 'status');
+      thankYou.setAttribute('tabindex', '-1');
+      thankYou.innerHTML = '<span class="thanks-mark" aria-hidden="true">✓</span><p class="eyebrow">ENQUIRY RECEIVED</p><h3>Thank you<span class="thanks-name"></span>.</h3><p>Your enquiry has been accepted for email delivery to our boutique. We’ll review your details and reply by email.</p><p class="thanks-note">Your appointment is confirmed only after the boutique replies.</p><a class="text-link" href="index.html">Return to Home</a>';
+      if (customerName) thankYou.querySelector('.thanks-name').textContent = `, ${customerName}`;
+      [...form.children].forEach(child => { child.hidden = true; });
+      form.append(thankYou);
+      form.classList.add('is-submitted');
+      form.reset();
+      thankYou.focus({ preventScroll: true });
+      thankYou.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
+    } catch (error) {
+      status.textContent = error.message === 'activation'
+        ? 'Email delivery is awaiting one-time FormSubmit activation. Please use WhatsApp for now or try again after activation.'
+        : 'We could not send your enquiry. Please check your connection and try again, or contact us on WhatsApp.';
+      status.classList.add('is-error');
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+    }
   });
 }

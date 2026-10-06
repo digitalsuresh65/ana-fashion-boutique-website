@@ -17,6 +17,14 @@
 .form-honey{display:none!important}
 #appointment-form button:disabled{cursor:wait;opacity:.72}
 .optional{color:var(--muted);font-size:.78rem;font-weight:400}
+.form-status.is-error{color:#8b1937;font-weight:600}
+.form-thanks{background:var(--ivory);border:1px solid var(--line);border-top:4px solid #9ee600;min-height:29rem;padding:clamp(2rem,5vw,4rem);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.form-thanks:focus{outline:none}
+.form-thanks .thanks-mark{align-items:center;background:#b6ff00;border-radius:50%;color:#111;display:flex;font-size:1.5rem;font-weight:700;height:3.5rem;justify-content:center;margin-bottom:1.4rem;width:3.5rem}
+.form-thanks .eyebrow{margin-bottom:1rem}
+.form-thanks h3{font-size:clamp(2.2rem,4vw,3.4rem);margin-bottom:1.2rem}
+.form-thanks>p:not(.eyebrow){color:var(--muted);max-width:31rem}
+.form-thanks .thanks-note{font-size:.82rem;margin:.4rem 0 1.5rem}
 
 /* Lightweight motion and playful scroll details */
 .scroll-progress{background:rgba(182,255,0,.14);height:3px;inset:0 0 auto;pointer-events:none;position:fixed;z-index:50}
