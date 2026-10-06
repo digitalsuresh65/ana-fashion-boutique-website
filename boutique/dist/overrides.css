@@ -18,6 +18,7 @@
 #appointment-form button:disabled{cursor:wait;opacity:.72}
 .optional{color:var(--muted);font-size:.78rem;font-weight:400}
 .form-status.is-error{color:#8b1937;font-weight:600}
+#appointment-form[hidden]{display:none!important}
 .form-thanks{background:var(--ivory);border:1px solid var(--line);border-top:4px solid #9ee600;min-height:29rem;padding:clamp(2rem,5vw,4rem);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .form-thanks:focus{outline:none}
 .form-thanks .thanks-mark{align-items:center;background:#b6ff00;border-radius:50%;color:#111;display:flex;font-size:1.5rem;font-weight:700;height:3.5rem;justify-content:center;margin-bottom:1.4rem;width:3.5rem}

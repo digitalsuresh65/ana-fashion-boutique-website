@@ -211,10 +211,9 @@ if (form) {
       thankYou.setAttribute('tabindex', '-1');
       thankYou.innerHTML = '<span class="thanks-mark" aria-hidden="true">✓</span><p class="eyebrow">ENQUIRY RECEIVED</p><h3>Thank you<span class="thanks-name"></span>.</h3><p>Your enquiry has been accepted for email delivery to our boutique. We’ll review your details and reply by email.</p><p class="thanks-note">Your appointment is confirmed only after the boutique replies.</p><a class="text-link" href="index.html">Return to Home</a>';
       if (customerName) thankYou.querySelector('.thanks-name').textContent = `, ${customerName}`;
-      [...form.children].forEach(child => { child.hidden = true; });
-      form.append(thankYou);
-      form.classList.add('is-submitted');
       form.reset();
+      form.insertAdjacentElement('afterend', thankYou);
+      form.hidden = true;
       thankYou.focus({ preventScroll: true });
       thankYou.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
     } catch (error) {
