@@ -74,3 +74,6 @@
   .hero-image>img{transform:none!important}
   .scroll-progress span{transition:none!important}
 }
+
+/* Keep the supplied transparent logo on a clean white tile. */
+.brand-logo,.footer-logo{background:#fff}
