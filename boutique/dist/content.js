@@ -1,5 +1,5 @@
 /*
-  ANA Fashion Boutique content
+  A&A Fashion Boutique content
   ---------------------------------
   Edit service descriptions, FAQ answers, contact details and gallery items
   here. Web-optimized gallery images live in the assets folder; the original
@@ -8,7 +8,7 @@
 
 (() => {
 const BOUTIQUE = {
-  name: "ANA Fashion Boutique",
+  name: "A&A Fashion Boutique",
   phoneDisplay: "98415 91833",
   phoneLink: "+9779841591833",
   whatsapp: "9779841591833",
@@ -44,5 +44,5 @@ const faq = [
   { q: "How long will my order take?", a: "Timelines depend on the garment, design complexity, fittings and current schedule. We will discuss an estimated delivery date after understanding your requirements; no booking is confirmed until the boutique confirms it." },
 ];
 
-window.ANA_CONTENT = { BOUTIQUE, services, gallery, faq };
+window.AA_CONTENT = { BOUTIQUE, services, gallery, faq };
 })();
